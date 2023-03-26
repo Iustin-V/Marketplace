@@ -1,24 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Navbar } from "./components/Navbar";
+import "./App.css";
+import {Home} from "./components/Home";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <BrowserRouter>
+        {/*<div ref={topRef} />*/}
+        <Navbar />
+        {/*<ScrollToTop />*/}
+        <Routes>
+            <Route path={`/acasa`} element={<Home />} />
+          {/*  {navbarLinks}*/}
+          {/*  <Route path="/blog" element={<WorkInProgress />} />*/}
+          {/*  <Route path="/login" element={<Login />} />*/}
+          {/*  {coursesLinkRoutesChildParents}*/}
+          {/*  {coursesLinkRoutesTeacher}*/}
+          {/*  {eventsLinkRoutes}*/}
+          {/*  <Route path="*" element={<UnknownRoute />} />*/}
+        </Routes>
+        {/*<ToTopButton topRef={topRef} isTopButton={isTopButton} />*/}
+        {/*<Footer />*/}
+      </BrowserRouter>
     </div>
   );
 }
