@@ -6,11 +6,17 @@ import {
   PageDescription,
   PageTitle,
   StyledCategory,
-  StyledPageWrapper, StyledSubcategories, StyledSubcategory,
+  StyledPageWrapper,
+  StyledSubcategories,
+  StyledSubcategory,
 } from "./Home-Style";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { MarketplaceContext } from "../App";
 
 export const Home = () => {
+  const { marketplaceData, setMarketplaceData } =
+    React.useContext(MarketplaceContext);
+
   const [categories, setCategories] = useState([{ id: 0, nume: "" }]);
   const [subcategory, setSubcategory] = useState([
     { id: 0, nume: "", id_categorie: 0 },
@@ -31,7 +37,20 @@ export const Home = () => {
   const categoryList = categories.map((categ, index) => {
     const subcategories = subcategory.map((subcateg) => {
       if (index + 1 === subcateg.id_categorie) {
-        return <StyledSubcategory to={`search/${subcateg.nume.replaceAll(" ","-").toLowerCase()}`}> {subcateg.nume}</StyledSubcategory>;
+        return (
+          <StyledSubcategory
+            to={`http://localhost:3000/search/${categ.nume
+              .replaceAll(" ", "-")
+              .toLowerCase()}/${subcateg.nume
+              .replaceAll(" ", "-")
+              .toLowerCase()}`}
+            onClick={() => {
+              setMarketplaceData({ category: categ, subcategory: subcateg });
+            }}
+          >
+            {subcateg.nume}
+          </StyledSubcategory>
+        );
       }
       return <></>;
     });
