@@ -147,6 +147,29 @@ app.post("/api/login", (req, res) => {
     );
 });
 
+app.post('/api/anunt', (req, res) => {
+    const { titlu, descriere, data, id_subcategorie, id_user, imagine } = req.body;
+    const base64Image = imagine.replace(/^data:image\/\w+;base64,/, '');
+    const binaryImage = Buffer.from(base64Image, 'base64');
+    const query = `
+    INSERT INTO anunt (titlu, descriere, data, id_subcategorie, id_user, imagine)
+    VALUES (?, ?, ?, ?, ?, ?)
+  `;
+
+    const values = [titlu, descriere, data, id_subcategorie, id_user, binaryImage];
+
+    db.query(query, values, (err, result) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Error inserting anunt into the database' });
+            return;
+        }
+
+        res.status(201).json({ message: 'Anunt created successfully', id: result.insertId });
+    });
+});
+
+
 // set port, listen for requests
 app.listen(PORT, () => {
   console.log(`Server is running on ${PORT}`);

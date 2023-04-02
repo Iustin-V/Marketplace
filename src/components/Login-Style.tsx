@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import {getAllByPlaceholderText} from "@testing-library/react";
+import { getAllByPlaceholderText } from "@testing-library/react";
 
 export const StyledLoginInput = styled.input`
- 
   background-color: #f6f6f6;
   color: #0d0d0d;
   padding: 15px 32px;
@@ -10,7 +9,8 @@ export const StyledLoginInput = styled.input`
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  border: 3px solid #f6f6f6; outline: none;
+  border: 3px solid #f6f6f6;
+  outline: none;
   -webkit-transition: all 0.5s ease-in-out;
   -moz-transition: all 0.5s ease-in-out;
   -ms-transition: all 0.5s ease-in-out;
@@ -22,8 +22,6 @@ export const StyledLoginInput = styled.input`
     background-color: #fff;
     border-bottom: 2px solid #5fbae9;
   }
-
-
 `;
 export const StyledLoginButton = styled.div<{ isRegister?: boolean }>`
   background-color: #56baed;
@@ -49,26 +47,33 @@ export const StyledLoginButton = styled.div<{ isRegister?: boolean }>`
     background-color: #2585b6;
   }
 `;
-export const ButtonWrapper=styled.div`
+export const ButtonWrapper = styled.div`
   justify-content: center;
   align-items: center;
   display: flex;
-gap: 15px;
-  text-align: center;`
+  gap: 15px;
+  text-align: center;
+`;
 
-export const StyledForm=styled.div`
-
+export const StyledForm = styled.div`
   -webkit-border-radius: 10px 10px 10px 10px;
   border-radius: 10px 10px 10px 10px;
   background: #fff;
   padding: 30px;
   width: fit-content;
   position: relative;
-  -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
-  box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+  -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
   text-align: center;
   display: flex;
   flex-direction: column;
-gap:20px
-
-    `
+  gap: 20px;
+`;
+export const ErrorWrapper = styled.div`
+  width: 100%;
+  color: white;
+  font-weight: bold;
+  background-color: rgba(255, 0, 0, 0.5);
+  border-radius: 5px;
+  padding: 10px;
+`;

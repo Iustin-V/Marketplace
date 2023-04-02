@@ -4,7 +4,8 @@ import { Navbar } from "./components/Navbar";
 import "./App.css";
 import { SearchPage } from "./components/SearchPage";
 import { Home } from "./components/Home";
-import {Login} from "./components/Login";
+import { Login } from "./components/Login";
+import { AddPage } from "./components/AddPage";
 
 export const MarketplaceContext = React.createContext({
   marketplaceData: {
@@ -31,9 +32,13 @@ function App() {
           <Navbar />
           {/*<ScrollToTop />*/}
           <Routes>
-            <Route path={`/home`} element={<Home />} />
+            <Route path={`/acasa`} element={<Home />} />
             <Route path={`/login`} element={<Login />} />
-            <Route path={"/search/:searchCateg/:searchParam"} element={<SearchPage />} />
+            <Route path={`/adauga-anunt`} element={<AddPage />} />
+            <Route
+              path={"/search/:searchCateg/:searchParam"}
+              element={<SearchPage />}
+            />
             {/*  {navbarLinks}*/}
             {/*  <Route path="/blog" element={<WorkInProgress />} />*/}
             {/*  <Route path="/login" element={<Login />} />*/}

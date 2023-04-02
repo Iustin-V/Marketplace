@@ -13,25 +13,31 @@ interface NavbarProps {}
 export const Navbar = (props: NavbarProps) => {
   const NavItems = ["Mesaje", "Favorite", "Contul tau"];
 
-  console.log('aaaa',window.location.pathname.slice((window.location.pathname.lastIndexOf("/")+1)));
-const handleKeyDown=(e:any)=>{
-  if(e.key==="Enter"){
-    console.log(e.target.value)
-    window.location.replace(`/search/all/${e.target.value}`)
-  }
-}
+  console.log(
+    "aaaa",
+    window.location.pathname.slice(
+      window.location.pathname.lastIndexOf("/") + 1
+    )
+  );
+  const handleKeyDown = (e: any) => {
+    if (e.key === "Enter") {
+      console.log(e.target.value);
+      window.location.replace(`/search/all/${e.target.value}`);
+    }
+  };
   const NavItemsList = NavItems.map((item) => {
-    return (
-      <StyledNavItem to={`${item.replace(" ", "-").toLowerCase()}`}>
-        {item}
-      </StyledNavItem>
-    );
+    const path =
+      item !== "Contul tau" || localStorage.token
+        ? item.replace(" ", "-").toLowerCase()
+        : "login";
+
+    return <StyledNavItem to={`${path}`}>{item}</StyledNavItem>;
   });
   return (
     <Container>
       <StyledNav>
-        <Logo to={"home"}>Marketplace</Logo>
-        <StyledInput onKeyDown={handleKeyDown}/>
+        <Logo to={"acasa"}>Marketplace</Logo>
+        <StyledInput onKeyDown={handleKeyDown} />
         <ItemsWrapper>
           <StyledNavItems>
             <>{NavItemsList}</>
