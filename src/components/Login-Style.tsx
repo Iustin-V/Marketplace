@@ -70,10 +70,10 @@ export const StyledForm = styled.div`
   gap: 20px;
 `;
 export const ErrorWrapper = styled.div`
-  width: 100%;
   color: white;
   font-weight: bold;
   background-color: rgba(255, 0, 0, 0.5);
+  font-size: 15px;
   border-radius: 5px;
   padding: 10px;
 `;

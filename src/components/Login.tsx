@@ -13,33 +13,47 @@ import {
 
 export const Login = () => {
   const [credentials, setCredentials] = React.useState({
+    email: "",
+    password: "",
+  });
+  const [newUserData,setNewUserData] = React.useState({
+    email:"",
     username: "",
+    name:"",
     password: "",
   });
 
   const [errorState, setErrorState] = React.useState("");
-  const handleRegister = () => {
+  const [isLogin, setIsLogin] = React.useState(false);
+  const handleRegister = (email:string,
+                          username: string,
+                          name:string,
+                          password: string) => {
+    console.log(newUserData)
     Axios.post("http://localhost:3002/api/register", {
-      nume_utilizator: "marcelboss",
-      mail: "marcel@example.com",
-      nume: "marcel prodan",
-      parola: "password123",
+      mail: email,
+      nume_utilizator: username,
+      nume: name,
+      parola: password,
     })
       .then((response) => {
         console.log(response.data.message);
+        window.location.href = `/acasa`;
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
   React.useEffect(() => {
     if (localStorage.token) {
       window.location.href = `/acasa`;
     }
   }, []);
-  const handleLogin = (nume_utilizator: string, parola: string) => {
+
+  const handleLogin = (email: string, parola: string) => {
     Axios.post("http://localhost:3002/api/login", {
-      nume_utilizator: nume_utilizator,
+      mail: email,
       parola: parola,
     })
       .then((response) => {
@@ -55,6 +69,12 @@ export const Login = () => {
 
   const handleChange = (e: any) => {
     setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+
+    setErrorState('')
+  };
+  const handleRegisterChange = (e: any) => {
+    setNewUserData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+    setErrorState('')
   };
 
   return (
@@ -62,38 +82,85 @@ export const Login = () => {
       {!localStorage.token ? (
         <PageContainer>
           <StyledForm>
-            <PageTitle>Intra in cont</PageTitle>
+            {isLogin?<>
+              <PageTitle>Inregistreaza-te</PageTitle>
 
-            <StyledLoginInput
-              id="username"
-              placeholder="Nume"
-              onChange={handleChange}
-            />
+              <StyledLoginInput
+                  id="email"
+                  placeholder="Email"
+                  onChange={handleRegisterChange}
+              />
 
-            <StyledLoginInput
-              id="password"
-              type="password"
-              placeholder="Parola"
-              onChange={handleChange}
-            />
-            <ButtonWrapper>
-              <StyledLoginButton
-                onClick={() =>
-                  handleLogin(credentials.username, credentials.password)
-                }
-              >
-                Autentifica-te
-              </StyledLoginButton>
-              <StyledLoginButton onClick={() => handleRegister()}>
-                Inregistreaza-te
-              </StyledLoginButton>
-            </ButtonWrapper>
-            {errorState && (
-              <ErrorWrapper>
-                A aparut o eroare la autentificare, va rugam incercati din nou.
-              </ErrorWrapper>
-            )}
+              <StyledLoginInput
+                  id="name"
+                  placeholder="Nume Complet"
+                  onChange={handleRegisterChange}
+              />
+              <StyledLoginInput
+                  id="username"
+                  placeholder="Nume Utilizator"
+                  onChange={handleRegisterChange}
+              />
+
+              <StyledLoginInput
+                  id="password"
+                  type="password"
+                  placeholder="Parola"
+                  onChange={handleRegisterChange}
+              />
+              <ButtonWrapper>
+                <StyledLoginButton
+                    onClick={() =>
+                       setIsLogin(false)
+                    }
+                >
+                  Autentifica-te
+                </StyledLoginButton>
+                <StyledLoginButton onClick={() => handleRegister(newUserData.email,newUserData.username,newUserData.name,newUserData.password)}>
+                  Inregistreaza-te
+                </StyledLoginButton>
+              </ButtonWrapper>
+              {errorState && (
+                  <ErrorWrapper>
+                    A aparut o eroare la autentificare, va rugam incercati din nou.
+                  </ErrorWrapper>
+              )}
+            </>:<>
+              <PageTitle>Intra in cont</PageTitle>
+
+              <StyledLoginInput
+                  id="email"
+                  placeholder="Email"
+                  onChange={handleChange}
+              />
+
+              <StyledLoginInput
+                  id="password"
+                  type="password"
+                  placeholder="Parola"
+                  onChange={handleChange}
+              />
+              <ButtonWrapper>
+                <StyledLoginButton
+                    onClick={() =>
+                        handleLogin(credentials.email, credentials.password)
+                    }
+                >
+                  Autentifica-te
+                </StyledLoginButton>
+                <StyledLoginButton onClick={() => setIsLogin(true)}>
+                  Inregistreaza-te
+                </StyledLoginButton>
+              </ButtonWrapper>
+              {errorState && (
+                  <ErrorWrapper>
+                    A aparut o eroare la autentificare, va rugam incercati din nou.
+                  </ErrorWrapper>
+              )}
+            </>
+            }
           </StyledForm>
+
         </PageContainer>
       ) : (
         <></>

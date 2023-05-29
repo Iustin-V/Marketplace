@@ -6,6 +6,7 @@ import { SearchPage } from "./components/SearchPage";
 import { Home } from "./components/Home";
 import { Login } from "./components/Login";
 import { AddPage } from "./components/AddPage";
+import {ProductPage} from "./components/ProductPage";
 
 export const MarketplaceContext = React.createContext({
   marketplaceData: {
@@ -34,10 +35,15 @@ function App() {
           <Routes>
             <Route path={`/acasa`} element={<Home />} />
             <Route path={`/login`} element={<Login />} />
+            <Route path={`/test`} element={<ProductPage />} />
             <Route path={`/adauga-anunt`} element={<AddPage />} />
             <Route
               path={"/search/:searchCateg/:searchParam"}
               element={<SearchPage />}
+            />
+            <Route
+              path={"/:searchCateg/anunt/:listingName/:listingId"}
+              element={<ProductPage />}
             />
             {/*  {navbarLinks}*/}
             {/*  <Route path="/blog" element={<WorkInProgress />} />*/}

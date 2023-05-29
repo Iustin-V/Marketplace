@@ -13,8 +13,9 @@ export const StyledListing = styled.div`
 
 export const ListingWrapper = styled.div`
   display: flex;
-  flex-direction: column;
   gap: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
 `;
 export const StyledImg = styled.img`
   height: 200px;

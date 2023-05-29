@@ -59,6 +59,26 @@ app.get("/api/listings/:id", (req, res) => {
     }
   );
 });
+app.get("/api/listing/:id", (req, res) => {
+  const subcategoryId = req.params.id;
+
+  db.query(
+    "SELECT * FROM anunt WHERE id = ?",
+    subcategoryId,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        res.status(500).json({ error: "Error fetching data from database" });
+        return;
+      }
+      result.forEach((listing) => {
+        listing.imagine = Buffer.from(listing.imagine).toString("base64");
+      });
+      res.setHeader("Content-Type", "application/json");
+      res.json(result);
+    }
+  );
+});
 
 app.get("/api/search/:id", (req, res) => {
   const searchTerm = req.params.id;
@@ -106,10 +126,10 @@ app.post("/api/register", (req, res) => {
 });
 
 app.post("/api/login", (req, res) => {
-    const { nume_utilizator, parola } = req.body;
+    const { mail, parola } = req.body;
     db.query(
-        "SELECT * FROM utilizator WHERE nume_utilizator = ?",
-        nume_utilizator,
+        "SELECT * FROM utilizator WHERE mail = ?",
+        mail,
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -148,15 +168,16 @@ app.post("/api/login", (req, res) => {
 });
 
 app.post('/api/anunt', (req, res) => {
-    const { titlu, descriere, data, id_subcategorie, id_user, imagine } = req.body;
+    const { data1,data2} = req.body;
+    const { titlu, descriere, data, id_subcategorie, id_user, imagine ,localitate,judet} = data1;
     const base64Image = imagine.replace(/^data:image\/\w+;base64,/, '');
     const binaryImage = Buffer.from(base64Image, 'base64');
     const query = `
-    INSERT INTO anunt (titlu, descriere, data, id_subcategorie, id_user, imagine)
-    VALUES (?, ?, ?, ?, ?, ?)
+    INSERT INTO anunt (titlu, descriere, data, id_subcategorie, id_user, imagine, localitate, judet)
+    VALUES (?, ?, ?, ?, ?, ?,?,?)
   `;
 
-    const values = [titlu, descriere, data, id_subcategorie, id_user, binaryImage];
+    const values = [titlu, descriere, data, id_subcategorie, id_user, binaryImage,localitate, judet];
 
     db.query(query, values, (err, result) => {
         if (err) {
@@ -167,6 +188,35 @@ app.post('/api/anunt', (req, res) => {
 
         res.status(201).json({ message: 'Anunt created successfully', id: result.insertId });
     });
+
+    const {imagine1,imagine2,imagine3,id_anunt}=data2;
+
+    const base64Image1 = imagine1.replace(/^data:image\/\w+;base64,/, '');
+    const binaryImage1 = Buffer.from(base64Image1, 'base64');
+
+    const base64Image2 = imagine2.replace(/^data:image\/\w+;base64,/, '');
+    const binaryImage2 = Buffer.from(base64Image2, 'base64');
+
+    const base64Image3 = imagine3.replace(/^data:image\/\w+;base64,/, '');
+    const binaryImage3 = Buffer.from(base64Image3, 'base64');
+    const query2 = `
+    INSERT INTO imagini_anunturi (imagine1,imagine2,imagine3,id_anunt)
+    VALUES (?, ?, ?, ?)
+  `;
+
+    const values2 = [binaryImage1,binaryImage2,binaryImage3,id_anunt];
+
+    db.query(query2, values2, (err, result) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Error inserting anunt into the database' });
+            return;
+        }
+
+        res.status(201).json({ message: 'Anunt created successfully', id: result.insertId });
+    });
+
+
 });
 
 
