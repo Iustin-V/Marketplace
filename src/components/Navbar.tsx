@@ -45,5 +45,6 @@ export const Navbar = (props: NavbarProps) => {
         </ItemsWrapper>
       </StyledNav>
     </Container>
-  );
+
+);
 };
