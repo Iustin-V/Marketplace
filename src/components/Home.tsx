@@ -1,11 +1,12 @@
 import Axios from "axios";
-import auto from './auto.jpg';
-import imobiliare from './imobiliare.jpg';
-import telefon from './telefon.jpg';
-import fashion from './fashion.jpg';
-import servicii from './servicii.jpg';
-import job from './job.jpg';
-import animalecompanie from './animalecompanie.jpg';
+import auto from '../images/auto.jpg';
+import imobiliare from '../images/imobiliare.jpg';
+import telefon from '../images/telefon.jpg';
+import fashion from '../images/fashion.jpg';
+import servicii from '../images/servicii.jpg';
+import gradinda from '../images/gradina.jpg';
+import job from '../images/job.jpg';
+import animalecompanie from '../images/animalecompanie.jpg';
 import {
   AddButton,
   CategoryWrapper,
@@ -52,7 +53,7 @@ export const Home = () => {
         <p
               onClick={() => {
                 setMarketplaceData({ category: {id:categ.id,nume:categ.nume}, subcategory: {id:subcateg.id,nume:subcateg.nume,id_categorie:subcateg.id_categorie} });
-                window.location.href=`http://localhost:3000/search/${categ.nume
+                window.location.href=`http://localhost:3000/cauta/${categ.nume
                     .replaceAll(" ", "-")
                     .toLowerCase()}/${subcateg.nume
                     .replaceAll(" ", "-")
@@ -172,7 +173,7 @@ export const Home = () => {
             <div className="w-full md:w-1/3 flex flex-col flex-grow flex-shrink">
               <div className="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow-lg">
                 <p className="w-full text-gray-600 text-xs md:text-sm pt-6 px-6">GASESTE PRODUSUL DORIT</p>
-                <div className="w-full font-bold text-xl text-gray-900 px-6">👋 Descopera categoriile de produse </div>
+                <div className="w-full font-bold text-xl text-gray-900 px-6 mb-5">👋 Descopera categoriile de produse </div>
                 {/*<p className="text-gray-800 font-serif text-base px-6 mb-5">*/}
                 {/*  Poti alege dintr-o multitudine de categorii in functie de preferintele tale*/}
                 {/*</p>*/}
@@ -197,7 +198,7 @@ export const Home = () => {
               <a href="/categorie/1/auto" className="flex flex-wrap no-underline hover:no-underline">
                 <img src={auto} className="h-64 w-full rounded-t pb-6 object-cover"/>
                   <p className="w-full text-gray-600 text-xs md:text-sm px-6">DESCOPERA AUTO</p>
-                  <div className="w-full font-bold text-xl text-gray-900 px-6">Include autoturisme, motociclete si piese auto</div>
+                  <div className="w-full font-bold text-xl text-gray-900 px-6 mb-5">Include autoturisme, motociclete si piese auto</div>
                   {/*<p className="text-gray-800 font-serif text-base px-6 mb-5">*/}
                   {/*  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at ipsum eu nunc commodo posuere et sit amet ligula.*/}
                   {/*</p>*/}
@@ -217,7 +218,7 @@ export const Home = () => {
               <a href="/categorie/2/imobiliare" className="flex flex-wrap no-underline hover:no-underline">
                 <img src={imobiliare} className="h-64 w-full rounded-t pb-6 object-cover"/>
                   <p className="w-full text-gray-600 text-xs md:text-sm px-6">DESCOPERA IMOBILIARE</p>
-                  <div className="w-full font-bold text-xl text-gray-900 px-6">Include apartamente, case si terenuri</div>
+                  <div className="w-full font-bold text-xl text-gray-900 px-6 mb-5">Include apartamente, case si terenuri</div>
                   {/*<p className="text-gray-800 font-serif text-base px-6 mb-5">*/}
                   {/*  Lorem ipsum dolor sit amet, consectetur adipiscing elit. ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at ip Aliquam at ipsum eu nunc commodo posuere et sit amet ligula.*/}
                   {/*</p>*/}
@@ -256,7 +257,7 @@ export const Home = () => {
               <a href="/categorie/4/articole-vestimentare" className="flex flex-wrap no-underline hover:no-underline">
                 <img src={fashion} className="h-full w-full rounded-t pb-6 object-cover"/>
                   <p className="w-full text-gray-600 text-xs md:text-sm px-6">DESCOPERA ARTICOLE VESTIMENTARE</p>
-                  <div className="w-full font-bold text-xl text-gray-900 px-6">Include rochii, camasi si pantaloni</div>
+                  <div className="w-full font-bold text-xl text-gray-900 px-6 mb-5">Include rochii, camasi si pantaloni</div>
                   {/*<p className="text-gray-800 font-serif text-base px-6 mb-5">*/}
                   {/*  Lorem ipsum eu nunc commodo posuere et sit amet ligula.*/}
                   {/*</p>*/}
@@ -275,7 +276,7 @@ export const Home = () => {
               <a href="/categorie/5/servicii" className="flex flex-wrap no-underline hover:no-underline">
                 <img src={servicii} className="h-full w-full rounded-t pb-6 object-cover"/>
                   <p className="w-full text-gray-600 text-xs md:text-sm px-6">DESCOPERA SERVICII</p>
-                  <div className="w-full font-bold text-xl text-gray-900 px-6">Include servicii de transport, curatenie si constructii</div>
+                  <div className="w-full font-bold text-xl text-gray-900 px-6 mb-5">Include servicii de transport, curatenie si constructii</div>
                   {/*<p className="text-gray-800 font-serif text-base px-6 mb-5">*/}
                   {/*  Lorem ipsum eu nunc commodo posuere et sit amet ligula.*/}
                   {/*</p>*/}
@@ -296,7 +297,7 @@ export const Home = () => {
               <a href="/categorie/6/locuri-de-munca" className="flex flex-wrap no-underline hover:no-underline">
                 <img src={job} className="h-full w-full rounded-t pb-6 object-cover"/>
                   <p className="w-full text-gray-600 text-xs md:text-sm px-6">DESCOPERA LOCURI DE MUNCA</p>
-                  <div className="w-full font-bold text-xl text-gray-900 px-6">Include job-uri in IT, vanzari si pozitii administrative</div>
+                  <div className="w-full font-bold text-xl text-gray-900 px-6 mb-5">Include job-uri in IT, vanzari si pozitii administrative</div>
                   {/*<p className="text-gray-800 font-serif text-base px-6 mb-5">*/}
                   {/*  Lorem ipsum eu nunc commodo posuere et sit amet ligula.*/}
                   {/*</p>*/}
@@ -315,7 +316,7 @@ export const Home = () => {
               <a href="/categorie/7/animale-de-companie" className="flex flex-wrap no-underline hover:no-underline">
                 <img src={animalecompanie} className="h-full w-full rounded-t pb-6 object-cover"/>
                   <p className="w-full text-gray-600 text-xs md:text-sm px-6">DESCOPERA ANIMALUTE DE COMPANIE</p>
-                  <div className="w-full font-bold text-xl text-gray-900 px-6">Include pisici, catei si papagali</div>
+                  <div className="w-full font-bold text-xl text-gray-900 px-6 mb-5">Include pisici, catei si papagali</div>
                   {/*<p className="text-gray-800 font-serif text-base px-6 mb-5">*/}
                   {/*  Lorem ipsum eu nunc commodo posuere et sit amet ligula.*/}
                   {/*</p>*/}
@@ -331,9 +332,9 @@ export const Home = () => {
           <div className="w-full md:w-1/3 p-6 flex flex-col flex-grow flex-shrink">
             <div className="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow-lg">
               <a href="/categorie/8/casa-si-gradina" className="flex flex-wrap no-underline hover:no-underline">
-                <img src={animalecompanie} className="h-full w-full rounded-t pb-6 object-cover"/>
+                <img src={gradinda} className="h-full w-full rounded-t pb-6 object-cover"/>
                   <p className="w-full text-gray-600 text-xs md:text-sm px-6">DESCOPERA CASA SI GRADINA</p>
-                  <div className="w-full font-bold text-xl text-gray-900 px-6">Include mobila, articole gradina si decoratiuni</div>
+                  <div className="w-full font-bold text-xl text-gray-900 px-6 mb-5 mb-5">Include mobila, articole gradina si decoratiuni</div>
                   {/*<p className="text-gray-800 font-serif text-base px-6 mb-5">*/}
                   {/*  Lorem ipsum eu nunc commodo posuere et sit amet ligula.*/}
                   {/*</p>*/}

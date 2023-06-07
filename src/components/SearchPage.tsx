@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-import { PageContainer, PageTitle, StyledPageWrapper } from "./Home-Style";
+import {PageContainer, PageSubtitle, PageTitle, StyledPageWrapper} from "./Home-Style";
 import { useParams } from "react-router-dom";
 import { MarketplaceContext } from "../App";
 import React, { useEffect } from "react";
@@ -27,7 +27,7 @@ export const SearchPage = () => {
       marketplaceData?.subcategory?.id.toString()
     );
   useEffect(() => {
-      if(params.searchCateg==='all'){
+      if(params.searchCateg==='toate'){
           Axios.get(
               `http://localhost:3002/api/search/${params.searchParam}`
           ).then((data) => {
@@ -102,8 +102,8 @@ export const SearchPage = () => {
     <StyledPageWrapper>
       <PageContainer>
         <PageTitle>Cauta {params.searchParam?.replaceAll("-", " ")}</PageTitle>
-        <PageTitle>Categorie: {capitalizeFirstLetter(params.searchCateg)}</PageTitle>
-        <PageTitle> Subcategorie: {params.searchParam} </PageTitle>
+        <PageSubtitle>Categorie: {capitalizeFirstLetter(params.searchCateg)}</PageSubtitle>
+          {params.searchCateg!=='toate' &&<PageSubtitle> Subcategorie: {params.searchParam} </PageSubtitle>}
         <ListingWrapper>{displayListings}</ListingWrapper>
       </PageContainer>
     </StyledPageWrapper>

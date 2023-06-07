@@ -22,7 +22,7 @@ export const Navbar = (props: NavbarProps) => {
   const handleKeyDown = (e: any) => {
     if (e.key === "Enter") {
       console.log(e.target.value);
-      window.location.replace(`/search/all/${e.target.value}`);
+      window.location.replace(`/cauta/toate/${e.target.value}`);
     }
   };
   const NavItemsList = NavItems.map((item) => {

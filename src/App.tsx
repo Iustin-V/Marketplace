@@ -38,7 +38,7 @@ function App() {
             <Route path={`/adauga-anunt`} element={<AddPage />} />
             <Route path={`/categorie/:categoryId/:categoryName`} element={<Category />} />
             <Route
-              path={"/search/:searchCateg/:searchParam"}
+              path={"/cauta/:searchCateg/:searchParam"}
               element={<SearchPage />}
             />
             <Route

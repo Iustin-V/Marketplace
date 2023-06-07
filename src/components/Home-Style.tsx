@@ -28,6 +28,9 @@ export const PageContainer = styled.div`
 export const PageTitle = styled.p`
   font-size: 30px;
   margin-top: 100px;
+`;export const PageSubtitle = styled.p`
+  margin-top: 15px;
+  font-size: 20px;
 `;
 export const PageDescription = styled.p`
   font-size: 20px;

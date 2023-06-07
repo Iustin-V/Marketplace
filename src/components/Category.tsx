@@ -3,6 +3,8 @@ import React from 'react'
 import Axios from "axios";
 import {MarketplaceContext} from "../App";
 import {useParams} from "react-router-dom";
+import {PageContainer, PageSubtitle, PageTitle, StyledPageWrapper} from './Home-Style';
+import {capitalizeFirstLetter} from "../utils/CapitalizeText";
 
 
 const Category = () => {
@@ -21,7 +23,11 @@ React.useEffect(()=>{
     console.log('subcategory',subcategory )
 
 
-    return (
+    return (    <StyledPageWrapper>
+        <PageContainer>
+
+            <PageTitle>Categorie: {capitalizeFirstLetter(params.categoryName)}</PageTitle>
+            <PageSubtitle>Selecteaza una din subcategoriile de mai jos:</PageSubtitle>
         <div className="mx-auto w-full max-w-5xl bg-white p-20">
             <ul className="flex flex-col">
                 {subcategory?.map(subcateg => (
@@ -39,7 +45,7 @@ React.useEffect(()=>{
 
                             <div className="pr-4 flex flex-col justify-between items-end" onClick={()=>localStorage.setItem('subcategoryId',subcateg.id.toString())}>
 
-                                <a href={ `/search/${params.categoryName?.toLowerCase()}/${subcateg.nume}`} className="text-sm text-gray-500 font-semibold hover:underline hover:text-gray-700">Vezi anunturi</a>
+                                <a href={ `/cauta/${params.categoryName?.toLowerCase()}/${subcateg.nume}`} className="text-sm text-gray-500 font-semibold hover:underline hover:text-gray-700">Vezi anunturi</a>
                             </div>
 
                         </div>
@@ -48,6 +54,8 @@ React.useEffect(()=>{
                 }
             </ul>
         </div>
+        </PageContainer>
+        </StyledPageWrapper>
     )
 }
 
