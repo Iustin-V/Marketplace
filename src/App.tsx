@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
 import "./App.css";
@@ -7,6 +7,7 @@ import { Home } from "./components/Home";
 import { Login } from "./components/Login";
 import { AddPage } from "./components/AddPage";
 import {ProductPage} from "./components/ProductPage";
+import Category from "./components/Category";
 
 export const MarketplaceContext = React.createContext({
   marketplaceData: {
@@ -20,10 +21,8 @@ export const MarketplaceContext = React.createContext({
 });
 
 function App() {
-  const [marketplaceData, setMarketplaceData] = React.useState({
-    category: { id: 0, nume: "" },
-    subcategory: { id: 0, nume: "", id_categorie: 0 },
-  });
+  const { marketplaceData, setMarketplaceData } = useContext(MarketplaceContext);
+
   const providerValue = { marketplaceData, setMarketplaceData };
   return (
     <div>
@@ -37,6 +36,7 @@ function App() {
             <Route path={`/login`} element={<Login />} />
             <Route path={`/test`} element={<ProductPage />} />
             <Route path={`/adauga-anunt`} element={<AddPage />} />
+            <Route path={`/categorie/:categoryId/:categoryName`} element={<Category />} />
             <Route
               path={"/search/:searchCateg/:searchParam"}
               element={<SearchPage />}

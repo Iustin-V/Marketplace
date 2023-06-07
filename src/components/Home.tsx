@@ -19,6 +19,7 @@ import {
 } from "./Home-Style";
 import React, { useEffect, useState } from "react";
 import { MarketplaceContext } from "../App";
+import {log} from "util";
 
 
 export const Home = () => {
@@ -85,7 +86,7 @@ export const Home = () => {
 
   );
   });
-
+  console.log('categoryList',categories)
   return (
     // <StyledPageWrapper>
     //   <PageContainer>
@@ -189,12 +190,12 @@ export const Home = () => {
         </div>
 
 
-        <div className="flex flex-wrap justify-between pt-12 -mx-6">
+        <div className="flex flex-wrap justify-between p-12 -mx-6">
 
-          <div className="w-full md:w-1/3 p-6 flex flex-col flex-grow flex-shrink">
+          <div className="w-full md:w-1/3 p-6 flex flex-col flex-grow flex-shrink" >
             <div className="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow-lg">
-              <a href="#" className="flex flex-wrap no-underline hover:no-underline">
-                <img src={auto} className="h-64 w-full rounded-t pb-6"/>
+              <a href="/categorie/1/auto" className="flex flex-wrap no-underline hover:no-underline">
+                <img src={auto} className="h-64 w-full rounded-t pb-6 object-cover"/>
                   <p className="w-full text-gray-600 text-xs md:text-sm px-6">DESCOPERA AUTO</p>
                   <div className="w-full font-bold text-xl text-gray-900 px-6">Include autoturisme, motociclete si piese auto</div>
                   {/*<p className="text-gray-800 font-serif text-base px-6 mb-5">*/}
@@ -213,8 +214,8 @@ export const Home = () => {
 
           <div className="w-full md:w-1/3 p-6 flex flex-col flex-grow flex-shrink">
             <div className="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow-lg">
-              <a href="#" className="flex flex-wrap no-underline hover:no-underline">
-                <img src={imobiliare} className="h-64 w-full rounded-t pb-6"/>
+              <a href="/categorie/2/imobiliare" className="flex flex-wrap no-underline hover:no-underline">
+                <img src={imobiliare} className="h-64 w-full rounded-t pb-6 object-cover"/>
                   <p className="w-full text-gray-600 text-xs md:text-sm px-6">DESCOPERA IMOBILIARE</p>
                   <div className="w-full font-bold text-xl text-gray-900 px-6">Include apartamente, case si terenuri</div>
                   {/*<p className="text-gray-800 font-serif text-base px-6 mb-5">*/}
@@ -232,8 +233,8 @@ export const Home = () => {
 
           <div className="w-full md:w-1/3 p-6 flex flex-col flex-grow flex-shrink">
             <div className="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow-lg">
-              <a href="#" className="flex flex-wrap no-underline hover:no-underline">
-                <img src={telefon} className="h-64 w-full rounded-t pb-6"/>
+              <a href="/categorie/3/electronice" className="flex flex-wrap no-underline hover:no-underline">
+                <img src={telefon} className="h-64 w-full rounded-t pb-6 object-cover"/>
                   <p className="w-full text-gray-600 text-xs md:text-sm px-6">DESCOPERA ELECTRONICE</p>
                   <div className="w-full  font-bold text-xl text-gray-900 px-6">Include telefoane mobile, laptop-uri si televizoare</div>
                   {/*<p className="text-gray-800 font-serif text-base px-6 mb-5">*/}
@@ -252,8 +253,8 @@ export const Home = () => {
 
           <div className="w-full md:w-1/2 p-6 flex flex-col flex-grow flex-shrink">
             <div className="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow-lg">
-              <a href="#" className="flex flex-wrap no-underline hover:no-underline">
-                <img src={fashion} className="h-full w-full rounded-t pb-6"/>
+              <a href="/categorie/4/articole-vestimentare" className="flex flex-wrap no-underline hover:no-underline">
+                <img src={fashion} className="h-full w-full rounded-t pb-6 object-cover"/>
                   <p className="w-full text-gray-600 text-xs md:text-sm px-6">DESCOPERA ARTICOLE VESTIMENTARE</p>
                   <div className="w-full font-bold text-xl text-gray-900 px-6">Include rochii, camasi si pantaloni</div>
                   {/*<p className="text-gray-800 font-serif text-base px-6 mb-5">*/}
@@ -271,8 +272,8 @@ export const Home = () => {
 
           <div className="w-full md:w-1/2 p-6 flex flex-col flex-grow flex-shrink">
             <div className="flex-1 flex-row bg-white rounded-t rounded-b-none overflow-hidden shadow-lg">
-              <a href="#" className="flex flex-wrap no-underline hover:no-underline">
-                <img src={servicii} className="h-full w-full rounded-t pb-6"/>
+              <a href="/categorie/5/servicii" className="flex flex-wrap no-underline hover:no-underline">
+                <img src={servicii} className="h-full w-full rounded-t pb-6 object-cover"/>
                   <p className="w-full text-gray-600 text-xs md:text-sm px-6">DESCOPERA SERVICII</p>
                   <div className="w-full font-bold text-xl text-gray-900 px-6">Include servicii de transport, curatenie si constructii</div>
                   {/*<p className="text-gray-800 font-serif text-base px-6 mb-5">*/}
@@ -290,10 +291,10 @@ export const Home = () => {
 
 
 
-          <div className="w-full md:w-2/3 p-6 flex flex-col flex-grow flex-shrink">
+          <div className="w-full md:w-1/3 p-6 flex flex-col flex-grow flex-shrink">
             <div className="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow-lg">
-              <a href="#" className="flex flex-wrap no-underline hover:no-underline">
-                <img src={job} className="h-full w-full rounded-t pb-6"/>
+              <a href="/categorie/6/locuri-de-munca" className="flex flex-wrap no-underline hover:no-underline">
+                <img src={job} className="h-full w-full rounded-t pb-6 object-cover"/>
                   <p className="w-full text-gray-600 text-xs md:text-sm px-6">DESCOPERA LOCURI DE MUNCA</p>
                   <div className="w-full font-bold text-xl text-gray-900 px-6">Include job-uri in IT, vanzari si pozitii administrative</div>
                   {/*<p className="text-gray-800 font-serif text-base px-6 mb-5">*/}
@@ -311,10 +312,28 @@ export const Home = () => {
 
           <div className="w-full md:w-1/3 p-6 flex flex-col flex-grow flex-shrink">
             <div className="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow-lg">
-              <a href="#" className="flex flex-wrap no-underline hover:no-underline">
-                <img src={animalecompanie} className="h-full w-full rounded-t pb-6"/>
+              <a href="/categorie/7/animale-de-companie" className="flex flex-wrap no-underline hover:no-underline">
+                <img src={animalecompanie} className="h-full w-full rounded-t pb-6 object-cover"/>
                   <p className="w-full text-gray-600 text-xs md:text-sm px-6">DESCOPERA ANIMALUTE DE COMPANIE</p>
                   <div className="w-full font-bold text-xl text-gray-900 px-6">Include pisici, catei si papagali</div>
+                  {/*<p className="text-gray-800 font-serif text-base px-6 mb-5">*/}
+                  {/*  Lorem ipsum eu nunc commodo posuere et sit amet ligula.*/}
+                  {/*</p>*/}
+              </a>
+            </div>
+            {/*<div className="flex-none mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow-lg p-6">*/}
+            {/*  <div className="flex items-center justify-between">*/}
+            {/*    <img className="w-8 h-8 rounded-full mr-4 avatar" data-tippy-content="Author Name" src="http://i.pravatar.cc/300" alt="Avatar of Author"/>*/}
+            {/*      <p className="text-gray-600 text-xs md:text-sm">1 MIN READ</p>*/}
+            {/*  </div>*/}
+            {/*</div>*/}
+          </div>
+          <div className="w-full md:w-1/3 p-6 flex flex-col flex-grow flex-shrink">
+            <div className="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow-lg">
+              <a href="/categorie/8/casa-si-gradina" className="flex flex-wrap no-underline hover:no-underline">
+                <img src={animalecompanie} className="h-full w-full rounded-t pb-6 object-cover"/>
+                  <p className="w-full text-gray-600 text-xs md:text-sm px-6">DESCOPERA CASA SI GRADINA</p>
+                  <div className="w-full font-bold text-xl text-gray-900 px-6">Include mobila, articole gradina si decoratiuni</div>
                   {/*<p className="text-gray-800 font-serif text-base px-6 mb-5">*/}
                   {/*  Lorem ipsum eu nunc commodo posuere et sit amet ligula.*/}
                   {/*</p>*/}

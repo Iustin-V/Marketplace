@@ -168,8 +168,7 @@ app.post("/api/login", (req, res) => {
 });
 
 app.post('/api/anunt', (req, res) => {
-    const { data1,data2} = req.body;
-    const { titlu, descriere, data, id_subcategorie, id_user, imagine ,localitate,judet} = data1;
+    const { titlu, descriere, data, id_subcategorie, id_user, imagine ,localitate,judet} = req.body;
     const base64Image = imagine.replace(/^data:image\/\w+;base64,/, '');
     const binaryImage = Buffer.from(base64Image, 'base64');
     const query = `
@@ -180,33 +179,6 @@ app.post('/api/anunt', (req, res) => {
     const values = [titlu, descriere, data, id_subcategorie, id_user, binaryImage,localitate, judet];
 
     db.query(query, values, (err, result) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Error inserting anunt into the database' });
-            return;
-        }
-
-        res.status(201).json({ message: 'Anunt created successfully', id: result.insertId });
-    });
-
-    const {imagine1,imagine2,imagine3,id_anunt}=data2;
-
-    const base64Image1 = imagine1.replace(/^data:image\/\w+;base64,/, '');
-    const binaryImage1 = Buffer.from(base64Image1, 'base64');
-
-    const base64Image2 = imagine2.replace(/^data:image\/\w+;base64,/, '');
-    const binaryImage2 = Buffer.from(base64Image2, 'base64');
-
-    const base64Image3 = imagine3.replace(/^data:image\/\w+;base64,/, '');
-    const binaryImage3 = Buffer.from(base64Image3, 'base64');
-    const query2 = `
-    INSERT INTO imagini_anunturi (imagine1,imagine2,imagine3,id_anunt)
-    VALUES (?, ?, ?, ?)
-  `;
-
-    const values2 = [binaryImage1,binaryImage2,binaryImage3,id_anunt];
-
-    db.query(query2, values2, (err, result) => {
         if (err) {
             console.error(err);
             res.status(500).json({ error: 'Error inserting anunt into the database' });

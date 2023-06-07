@@ -62,7 +62,7 @@ export const AddPage = () => {
     console.log(subcategorie)
     console.log(titlu, descriere, imagine);
     Axios.post("http://localhost:3002/api/anunt", {
-      data1: {
+
         titlu: titlu,
         descriere: descriere,
         data: new Date(),
@@ -71,13 +71,6 @@ export const AddPage = () => {
         imagine: imagine,
         localitate: localitate,
         judet: judet
-      },
-      data2:{
-        imagine1:image1,
-        imagine2:image2,
-        imagine3:image3,
-        id_anunt:0
-      }
     })
       .then((response) => {
         console.log(response.data.message);
@@ -202,9 +195,6 @@ export const AddPage = () => {
                 <div className="flex items-center py-6">
                   <label className="cursor-pointer ">
                     <UploadImage uploadFunction={getImage} />
-                    <UploadImage uploadFunction={getImage1} />
-                    <UploadImage uploadFunction={getImage2} />
-                    <UploadImage uploadFunction={getImage3} />
                     <input type="file" className="hidden" />
                   </label>
                 </div>

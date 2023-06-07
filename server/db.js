@@ -3,7 +3,7 @@ const db = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "",
-  database: "marketplace1",
+  database: "marketplace",
   port: 3306,
 });
 

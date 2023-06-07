@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { MarketplaceContext } from "../App";
 import React, { useEffect } from "react";
 import {ListingData, ListingWrapper, StyledImg, StyledListing} from "./SearchPage-Style";
+import {capitalizeFirstLetter} from "../utils/CapitalizeText";
 
 export const SearchPage = () => {
   const [listings, setListings] = React.useState([
@@ -101,7 +102,7 @@ export const SearchPage = () => {
     <StyledPageWrapper>
       <PageContainer>
         <PageTitle>Cauta {params.searchParam?.replaceAll("-", " ")}</PageTitle>
-        <PageTitle>Categorie: {params.searchCateg}</PageTitle>
+        <PageTitle>Categorie: {capitalizeFirstLetter(params.searchCateg)}</PageTitle>
         <PageTitle> Subcategorie: {params.searchParam} </PageTitle>
         <ListingWrapper>{displayListings}</ListingWrapper>
       </PageContainer>
