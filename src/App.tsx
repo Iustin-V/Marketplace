@@ -8,6 +8,8 @@ import { Login } from "./components/Login";
 import { AddPage } from "./components/AddPage";
 import {ProductPage} from "./components/ProductPage";
 import Category from "./components/Category";
+import {Account} from "./components/Account";
+import {CreateProfile} from "./components/CreateProfile";
 
 export const MarketplaceContext = React.createContext({
   marketplaceData: {
@@ -35,6 +37,9 @@ function App() {
             <Route path={`/acasa`} element={<Home />} />
             <Route path={`/login`} element={<Login />} />
             <Route path={`/test`} element={<ProductPage />} />
+            <Route path={`/contul-tau`} element={<Account />} />
+            <Route path={`/creeaza-profil`} element={<CreateProfile />} />
+
             <Route path={`/adauga-anunt`} element={<AddPage />} />
             <Route path={`/categorie/:categoryId/:categoryName`} element={<Category />} />
             <Route

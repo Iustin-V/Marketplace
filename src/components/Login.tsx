@@ -38,18 +38,18 @@ export const Login = () => {
     })
       .then((response) => {
         console.log(response.data.message);
-        window.location.href = `/acasa`;
+        window.location.href = `/creeaza-profil`;
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  React.useEffect(() => {
-    if (localStorage.token) {
-      window.location.href = `/acasa`;
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   if (localStorage.token) {
+  //     window.location.href = `/acasa`;
+  //   }
+  // }, []);
 
   const handleLogin = (email: string, parola: string) => {
     Axios.post("http://localhost:3002/api/login", {

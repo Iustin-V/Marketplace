@@ -191,6 +191,101 @@ app.post('/api/anunt', (req, res) => {
 
 });
 
+app.get("/api/profile", async (req, res) => {
+    try {
+        const token = req.headers.authorization.split(" ")[1];
+        const options = { expiresIn: "1h" };
+        const secretKey = "secretkey";
+
+        const decoded = await jwt.verify(token, secretKey, options);
+
+        const user_id = decoded.id;
+        db.query("SELECT * FROM profil WHERE user_id=?", user_id, (err, result) => {
+            if (err) {
+                console.log(err);
+                res.status(500).json({ error: "Error fetching data from database" });
+                return;
+            }
+            result.forEach((profile) => {
+                profile.poza_profil = Buffer.from(profile.poza_profil).toString(
+                    "base64"
+                );
+                profile.poza_cover = Buffer.from(profile.poza_cover).toString("base64");
+            });
+
+            res.json(result);
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ error: "Error signing token" });
+    }
+});
+app.post("/api/create-profile", async (req, res) => {
+    const {
+        nume,
+        prenume,
+        data_nasterii,
+        oras,
+        telefon,
+        tara,
+        poza_profil,
+        poza_cover,
+        descriere,
+    } = req.body;
+    const base64PozaProfil = poza_profil.replace(/^data:image\/\w+;base64,/, "");
+    const binaryPozaProfil = Buffer.from(base64PozaProfil, "base64");
+    const base64PozaCover = poza_cover.replace(/^data:image\/\w+;base64,/, "");
+    const binaryPozaCover = Buffer.from(base64PozaCover, "base64");
+
+    const token = req.headers.authorization.split(" ")[1];
+    const options = { expiresIn: "1h" };
+    const secretKey = "secretkey";
+
+    const decoded = await jwt.verify(token, secretKey, options);
+
+    const user_id = decoded.id;
+
+    const query = `
+    INSERT INTO profil (   nume,
+                          prenume,
+                          data_nasterii,
+                          oras,
+                           telefon,
+                          tara,
+                          user_id,
+                          poza_profil,
+                          poza_cover,
+                          descriere)
+    VALUES (?, ?, ?, ?, ?,?, ?,?,?,?)
+  `;
+
+    const values = [
+        nume,
+        prenume,
+        data_nasterii,
+        oras,
+        telefon,
+        tara,
+        user_id,
+        binaryPozaProfil,
+        binaryPozaCover,
+        descriere,
+    ];
+
+    db.query(query, values, (err, result) => {
+        if (err) {
+            console.error(err);
+            res
+                .status(500)
+                .json({ error: "Error inserting profil into the database" });
+            return;
+        }
+
+        res
+            .status(201)
+            .json({ message: "Profil created successfully", id: result.insertId });
+    });
+});
 
 // set port, listen for requests
 app.listen(PORT, () => {
