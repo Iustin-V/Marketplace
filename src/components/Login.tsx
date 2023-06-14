@@ -26,30 +26,26 @@ export const Login = () => {
   const [errorState, setErrorState] = React.useState("");
   const [isLogin, setIsLogin] = React.useState(false);
   const handleRegister = (email:string,
-                          username: string,
-                          name:string,
                           password: string) => {
     console.log(newUserData)
     Axios.post("http://localhost:3002/api/register", {
       mail: email,
-      nume_utilizator: username,
-      nume: name,
       parola: password,
     })
       .then((response) => {
         console.log(response.data.message);
-        window.location.href = `/creeaza-profil`;
+        window.location.href = `/login`;
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  // React.useEffect(() => {
-  //   if (localStorage.token) {
-  //     window.location.href = `/acasa`;
-  //   }
-  // }, []);
+  React.useEffect(() => {
+    if (localStorage.token) {
+      window.location.href = `/acasa`;
+    }
+  }, []);
 
   const handleLogin = (email: string, parola: string) => {
     Axios.post("http://localhost:3002/api/login", {
@@ -60,11 +56,28 @@ export const Login = () => {
         console.log(response.data.message);
         localStorage.setItem("token", response.data.token);
         setErrorState("");
-        window.location.href = `acasa`;
       })
       .catch((error) => {
         setErrorState(error);
       });
+
+    setTimeout(() => {
+      const token = localStorage.getItem("token");
+
+      Axios.get("http://localhost:3002/api/profile", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+          .then((response) => {
+            response.data.length === 0
+                ? (window.location.href = "/creeaza-profil")
+                : (window.location.href = "acasa");
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+    }, 1000);
   };
 
   const handleChange = (e: any) => {
@@ -92,17 +105,6 @@ export const Login = () => {
               />
 
               <StyledLoginInput
-                  id="name"
-                  placeholder="Nume Complet"
-                  onChange={handleRegisterChange}
-              />
-              <StyledLoginInput
-                  id="username"
-                  placeholder="Nume Utilizator"
-                  onChange={handleRegisterChange}
-              />
-
-              <StyledLoginInput
                   id="password"
                   type="password"
                   placeholder="Parola"
@@ -116,7 +118,7 @@ export const Login = () => {
                 >
                   Autentifica-te
                 </StyledLoginButton>
-                <StyledLoginButton onClick={() => handleRegister(newUserData.email,newUserData.username,newUserData.name,newUserData.password)}>
+                <StyledLoginButton onClick={() => handleRegister(newUserData.email,newUserData.password)}>
                   Inregistreaza-te
                 </StyledLoginButton>
               </ButtonWrapper>

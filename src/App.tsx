@@ -10,6 +10,7 @@ import {ProductPage} from "./components/ProductPage";
 import Category from "./components/Category";
 import {Account} from "./components/Account";
 import {CreateProfile} from "./components/CreateProfile";
+import {EditProfile} from "./components/EditProfile";
 
 export const MarketplaceContext = React.createContext({
   marketplaceData: {
@@ -39,6 +40,7 @@ function App() {
             <Route path={`/test`} element={<ProductPage />} />
             <Route path={`/contul-tau`} element={<Account />} />
             <Route path={`/creeaza-profil`} element={<CreateProfile />} />
+            <Route path={`/editeaza-profil`} element={<EditProfile />} />
 
             <Route path={`/adauga-anunt`} element={<AddPage />} />
             <Route path={`/categorie/:categoryId/:categoryName`} element={<Category />} />

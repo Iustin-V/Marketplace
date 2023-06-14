@@ -102,7 +102,7 @@ app.get("/api/search/:id", (req, res) => {
 });
 
 app.post("/api/register", (req, res) => {
-  const { nume_utilizator, mail, nume, parola } = req.body;
+  const { mail, parola } = req.body;
   const saltRounds = 10;
   bcrypt.hash(parola, saltRounds, (err, hashedPassword) => {
     if (err) {
@@ -111,8 +111,8 @@ app.post("/api/register", (req, res) => {
       return;
     }
     db.query(
-      "INSERT INTO utilizator (nume_utilizator, mail, nume, parola) VALUES (?, ?, ?, ?)",
-      [nume_utilizator, mail, nume, hashedPassword],
+      "INSERT INTO utilizator ( mail, parola) VALUES (?, ?)",
+      [ mail,  hashedPassword],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -287,6 +287,114 @@ app.post("/api/create-profile", async (req, res) => {
     });
 });
 
+app.delete("/api/delete-account", (req, res) => {
+    const token = req.headers.authorization.split(" ")[1];
+    const options = { expiresIn: "1h" };
+    const secretKey = "secretkey";
+
+    jwt.verify(token, secretKey, options, (err, decoded) => {
+        if (err) {
+            console.log(err);
+            res.status(500).json({ error: "Error decoding token" });
+            return;
+        }
+
+        const user_id = decoded.id;
+        db.query("DELETE FROM postari WHERE user_id=?", user_id, (err, result) => {
+            if (err) {
+                console.log(err);
+                res
+                    .status(500)
+                    .json({ error: "Error deleting user posts from database" });
+                return;
+            }
+        });
+        db.query("DELETE FROM profil WHERE user_id=?", user_id, (err, result) => {
+            if (err) {
+                console.log(err);
+                res
+                    .status(500)
+                    .json({ error: "Error deleting user profile from database" });
+                return;
+            }
+        });
+
+        db.query("DELETE FROM users WHERE id=?", user_id, (err, result) => {
+            if (err) {
+                console.log(err);
+                res.status(500).json({ error: "Error deleting user from database" });
+                return;
+            }
+        });
+        res.status(200).json({ message: "User account deleted successfully" });
+    });
+});
+
+app.put("/api/edit-profile", async (req, res) => {
+    try {
+        const {
+            nume,
+            prenume,
+            data_nasterii,
+            oras,
+            tara,
+            poza_profil,
+            poza_cover,
+            descriere,
+        } = req.body;
+
+        const base64PozaProfil = poza_profil.replace(
+            /^data:image\/\w+;base64,/,
+            ""
+        );
+        const binaryPozaProfil = Buffer.from(base64PozaProfil, "base64");
+        const base64PozaCover = poza_cover.replace(/^data:image\/\w+;base64,/, "");
+        const binaryPozaCover = Buffer.from(base64PozaCover, "base64");
+
+        const token = req.headers.authorization.split(" ")[1];
+        const options = { expiresIn: "1h" };
+        const secretKey = "secretkey";
+
+        const decoded = await jwt.verify(token, secretKey, options);
+
+        const user_id = decoded.id;
+
+        const updateQuery = `
+      UPDATE profil
+      SET nume = ?, prenume = ?, data_nasterii = ?, oras = ?, tara = ?, poza_profil = ?, poza_cover = ?, descriere = ?
+      WHERE user_id = ?
+    `;
+
+        const values = [
+            nume,
+            prenume,
+            data_nasterii,
+            oras,
+            tara,
+            binaryPozaProfil,
+            binaryPozaCover,
+            descriere,
+            user_id,
+        ];
+
+        db.query(updateQuery, values, (err, result) => {
+            if (err) {
+                console.error(err);
+                res
+                    .status(500)
+                    .json({ error: "Error updating profil into the database" });
+                return;
+            }
+
+            res
+                .status(200)
+                .json({ message: "Profil updated successfully", id: user_id });
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Error updating profil into the database" });
+    }
+});
 // set port, listen for requests
 app.listen(PORT, () => {
   console.log(`Server is running on ${PORT}`);

@@ -244,7 +244,7 @@ export const Account = () => {
                     <div className="flex flex-row gap-2 items-center justify-center margin-responsive">
                       {params.id && (
                         <button
-                          className="bg-red-800 hover:bg-red-600 active:bg-red-900 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none ease-linear transition-all duration-150"
+                          className="bg-blue-800 hover:bg-blue-600 active:bg-blue-900 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none ease-linear transition-all duration-150"
                           type="button"
                           onClick={() => {
                             if (params.id) {
@@ -257,17 +257,17 @@ export const Account = () => {
                       )}
                       {!params.id && (
                         <button
-                          className="bg-red-800 hover:bg-red-600 active:bg-red-900 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none ease-linear transition-all duration-150"
+                          className="bg-blue-800 hover:bg-blue-600 active:bg-blue-900 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none ease-linear transition-all duration-150"
                           type="button"
                           onClick={() => {
-                            window.location.href = "/edit-your-profile";
+                            window.location.href = "/editeaza-profil";
                           }}
                         >
                           Edit
                         </button>
                       )}
                       <a
-                        className="bg-red-800 hover:bg-red-600 active:bg-red-900 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none ease-linear transition-all duration-150"
+                        className="bg-blue-800 hover:bg-blue-600 active:bg-blue-900 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none ease-linear transition-all duration-150"
                         href="#posts"
                       >
                         Posts

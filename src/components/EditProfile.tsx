@@ -1,15 +1,13 @@
+import ConfirmationModal from "./ConfirmationModal";
 import { UploadImage } from "./utils/UploadImage";
-import {messageValidation, nameValidation, phoneValidation} from "./inputsValidation";
+import { messageValidation, nameValidation } from "./inputsValidation";
 import Axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-export const CreateProfile = () => {
+export const EditProfile = () => {
   document.body.style.background = "#b3d9ff";
-
-  const [birthdayDate, setBirthdayDate] = React.useState(new Date());
-  const [image, getImage] = React.useState("");
 
   const [profileInformations, setProfileInformations] = React.useState({
     prenume: "",
@@ -17,20 +15,38 @@ export const CreateProfile = () => {
     descriere: "",
     data_nasterii: "",
     oras: "",
-    telefon: "",
     tara: "",
     poza_profil: "",
     poza_cover: "",
   });
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    Axios.get("http://localhost:3002/api/profile", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        console.log(response.data);
+        setProfileInformations(response.data[0]);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+  const [birthdayDate, setBirthdayDate] = React.useState(new Date());
+  const [image, getImage] = React.useState("");
+
   const [errorState, setErrorState] = React.useState(false);
   const [numeError, setNumeError] = React.useState("");
   const [prenumeError, setPrenumeError] = React.useState("");
   const [descriereError, setDescriereError] = React.useState("");
   const [orasError, setOrasError] = React.useState("");
   const [taraError, setTaraError] = React.useState("");
-  const [telefonError, setTelefonError] = React.useState("");
   const [pozaProfilError, setPozaProfilError] = React.useState("");
   const [pozaCoverError, setPozaCoverError] = React.useState("");
+  const [openModal, setOpenModal] = useState(false);
 
   const onChangeHandle = (
     e: React.ChangeEvent<
@@ -53,9 +69,6 @@ export const CreateProfile = () => {
     if (e.target.id === "oras") {
       setOrasError(nameValidation(e.target.value));
       profileInformations.oras = e.target.value;
-    }    if (e.target.id === "telefon") {
-      setTelefonError(phoneValidation(e.target.value));
-      profileInformations.telefon = e.target.value;
     }
     if (e.target.id === "poza_profil") {
       setPozaProfilError(messageValidation(e.target.value));
@@ -67,19 +80,11 @@ export const CreateProfile = () => {
     }
   };
   const handleSave = () => {
-    console.log(     numeError,"numeError"  ,
-        prenumeError,"prenumeError"  ,
-        orasError,"orasError"  ,
-        taraError,"taraError"  ,
-        pozaProfilError,"pozaProfilError"  ,
-        pozaCoverError,"pozaCoverError"  ,
-        descriereError,"descriereError" )
     if (
       numeError === "" &&
       prenumeError === "" &&
       orasError === "" &&
       taraError === "" &&
-      telefonError === "" &&
       pozaProfilError === "" &&
       pozaCoverError === "" &&
       descriereError === ""
@@ -90,22 +95,19 @@ export const CreateProfile = () => {
         profileInformations.descriere !== "" &&
         profileInformations.data_nasterii !== "" &&
         profileInformations.oras !== "" &&
-        profileInformations.telefon !== "" &&
         profileInformations.tara !== "" &&
         profileInformations.poza_profil !== "" &&
         profileInformations.poza_cover !== ""
       ) {
         setErrorState(false);
         const token = localStorage.getItem("token");
-
-        Axios.post(
-          "http://localhost:3002/api/create-profile",
+        Axios.put(
+          "http://localhost:3002/api/edit-profile",
           {
             nume: profileInformations.nume,
             prenume: profileInformations.prenume,
             data_nasterii: profileInformations.data_nasterii,
             oras: profileInformations.oras,
-            telefon: profileInformations.telefon,
             tara: profileInformations.tara,
             poza_profil: profileInformations.poza_profil,
             poza_cover: profileInformations.poza_cover,
@@ -119,12 +121,11 @@ export const CreateProfile = () => {
         )
           .then((response) => {
             console.log(response.data.message);
-            window.location.href = "acasa";
+            window.location.href = "/account";
           })
           .catch((error) => {
             console.log(error);
           });
-
       } else {
         setErrorState(true);
       }
@@ -132,14 +133,31 @@ export const CreateProfile = () => {
       setErrorState(true);
     }
   };
+
+  const handleDelete = () => {
+    const token = localStorage.getItem("token");
+    Axios.delete("http://localhost:3002/api/delete-account", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        localStorage.removeItem("token");
+        window.location.href = "/register";
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div className="bg-white mx-auto max-w-5xl py-16 px-2 sm:px-6 lg:px-8 mt-10">
       <div>
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
             <h1 className="text-4xl font-bold text-blue-400">
-              Create your Profile
+              Edit your Profile
             </h1>
+
             <p className="mt-4 text-base leading-6 text-black">
               This information will be displayed publicly so be careful what you
               share.
@@ -160,6 +178,7 @@ export const CreateProfile = () => {
                       type="text"
                       name="firstname"
                       id="prenume"
+                      defaultValue={profileInformations.prenume}
                       autoComplete="firstname"
                       className="block px-2 flex-1 border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                       placeholder="First Name"
@@ -180,6 +199,7 @@ export const CreateProfile = () => {
                       type="text"
                       name="lastname"
                       id="nume"
+                      defaultValue={profileInformations.nume}
                       onChange={onChangeHandle}
                       autoComplete="lastname"
                       className="block px-2 flex-1 border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
@@ -203,7 +223,7 @@ export const CreateProfile = () => {
                     rows={3}
                     onChange={onChangeHandle}
                     className="block px-2 w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6"
-                    defaultValue={""}
+                    defaultValue={profileInformations.descriere}
                   />
                 </div>
                 <p className="mt-3 text-sm leading-6 text-gray-600">
@@ -219,7 +239,10 @@ export const CreateProfile = () => {
                   Profile Photo
                 </label>
                 <div className="mt-2 flex items-center gap-x-3">
-                  <UploadImage uploadFunction={onChangeHandle} />
+                  <UploadImage
+                    uploadFunction={onChangeHandle}
+                    usedImage={`data:image/png;base64,${profileInformations.poza_profil}`}
+                  />
                 </div>
               </div>
 
@@ -230,7 +253,11 @@ export const CreateProfile = () => {
                 >
                   Cover photo
                 </label>
-                <UploadImage uploadFunction={onChangeHandle} cover={true} />
+                <UploadImage
+                  uploadFunction={onChangeHandle}
+                  usedImage={`data:image/png;base64,${profileInformations.poza_cover}`}
+                  cover={true}
+                />
               </div>
             </div>
           </div>
@@ -258,10 +285,18 @@ export const CreateProfile = () => {
                     autoComplete="country-name"
                     className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                   >
-                    <option>Romania</option>
-                    <option>UK</option>
-                    <option>Ukraine</option>
-                    <option>Moldova</option>
+                    <option selected={profileInformations.tara === "Romania"}>
+                      Romania
+                    </option>
+                    <option selected={profileInformations.tara === "UK"}>
+                      UK
+                    </option>
+                    <option selected={profileInformations.tara === "Ukraine"}>
+                      Ukraine
+                    </option>
+                    <option selected={profileInformations.tara === "Moldova"}>
+                      Moldova
+                    </option>
                   </select>
                 </div>
               </div>
@@ -278,42 +313,10 @@ export const CreateProfile = () => {
                     onChange={onChangeHandle}
                     type="text"
                     name="city"
+                    defaultValue={profileInformations.oras}
                     id="oras"
                     autoComplete="address-level2"
                     className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>           <div className="sm:col-span-2 sm:col-start-1">
-                <label
-                  htmlFor="telefon"
-                  className="block text-xl font-medium leading-6 text-gray-900"
-                >
-                  telefon number
-                </label>
-                <div className="mt-2">
-                  <input
-                    onChange={onChangeHandle}
-                    type="text"
-                    name="telefon"
-                    id="telefon"
-                    autoComplete="address-level2"
-                    className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-2">
-                <label className="block text-xl font-medium leading-6 text-gray-900">
-                  Birthday
-                </label>
-                <div className="mt-2 date-picker">
-                  <DatePicker
-                    selected={birthdayDate}
-                    onChange={(date: Date) => {
-                      const dateString = new Date(date).toLocaleDateString();
-                      profileInformations.data_nasterii = dateString;
-                      setBirthdayDate(date);
-                    }}
                   />
                 </div>
               </div>
@@ -327,16 +330,28 @@ export const CreateProfile = () => {
             </h2>
           )}
         </div>
-        <div className="mt-6 flex items-center justify-center gap-x-6 sm:justify-end">
+        <div className="mt-6 flex items-center justify-center gap-x-6 sm:justify-between">
           <button
             type="submit"
-            className="rounded-md bg-blue-400 px-10 py-2 text-xl font-semibold text-white shadow-sm hover:bg-blue-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="rounded-md bg-blue-400 px-10 py-2 text-xl font-semibold text-white shadow-sm hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            onClick={() => setOpenModal(true)}
+          >
+            Delete
+          </button>
+          <button
+            type="submit"
+            className="rounded-md bg-blue-400 px-10 py-2 text-xl font-semibold text-white shadow-sm hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             onClick={handleSave}
           >
             Save
-          </button>
+          </button>{" "}
         </div>
       </div>
+      <ConfirmationModal
+        open={openModal}
+        setOpened={setOpenModal}
+        confirmHandle={handleDelete}
+      />
     </div>
   );
 };
