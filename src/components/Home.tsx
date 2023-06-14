@@ -116,7 +116,7 @@ export const Home = () => {
     //   </PageContainer>
     // </StyledPageWrapper>
       <>
-      <div className="w-full m-0 p-0 bg-cover bg-bottom" style={{backgroundImage:"url('cover.jpg'); height: 60vh; max-height:460px;"}}>
+      <div className="w-full m-0 p-0 bg-cover bg-bottom" style={{backgroundImage:"url('cover.jpg]'); height: 60vh; max-height:460px;"}}>
         <div className="container max-w-4xl mx-auto pt-16 md:pt-32 text-center break-normal">
           <p className="text-white font-extrabold text-3xl md:text-5xl">
              Marketplace
