@@ -21,6 +21,12 @@ export const StyledNav = styled.div`
   justify-content: space-between;
   align-items: center;
   overflow: hidden;
+  @media (max-width: 768px) {
+    width: 100%;
+    flex-direction: column;
+    padding: 0 40px 8px;
+    height: fit-content;
+  }
 `;
 
 export const ItemsWrapper = styled.div`
@@ -35,10 +41,7 @@ export const StyledNavItems = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-
-  @media (max-width: 1200px) {
-    display: none;
-  }
+  
 `;
 export const StyledNavItem = styled(Link)`
   width: fit-content;
@@ -77,12 +80,19 @@ export const StyledNavItem = styled(Link)`
       transition: all 1.5s;
     }
   }
+
+  @media (max-width: 768px) {
+    height: fit-content;
+  }
 `;
 export const StyledInput = styled.input`
   width: 300px;
   height: 25px;
   border-radius: 15px;
-  padding: 5px;
+  padding: 5px 10px;
+  @media (max-width: 900px) {
+   display: none;
+  }
 `;
 export const Logo = styled(Link)`
   font-size: 30px;

@@ -28,7 +28,7 @@ React.useEffect(()=>{
 
             <PageTitle>Categorie: {capitalizeFirstLetter(params.categoryName)}</PageTitle>
             <PageSubtitle>Selecteaza una din subcategoriile de mai jos:</PageSubtitle>
-        <div className="mx-auto w-full max-w-5xl bg-white p-20">
+        <div className="mx-auto w-full max-w-5xl bg-white p-0 mt-2 md:p-20 md:mt-0">
             <ul className="flex flex-col">
                 {subcategory?.map(subcateg => (
                     <li key={subcateg.id} className="border-b-2 border-gray-100">

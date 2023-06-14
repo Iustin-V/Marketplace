@@ -46,6 +46,10 @@ export const StyledLoginButton = styled.div<{ isRegister?: boolean }>`
   :hover {
     background-color: #2585b6;
   }
+  @media (max-width: 786px) {
+    width: 70%;
+    padding: 15px;
+  }
 `;
 export const ButtonWrapper = styled.div`
   justify-content: center;
@@ -53,6 +57,10 @@ export const ButtonWrapper = styled.div`
   display: flex;
   gap: 15px;
   text-align: center;
+
+  @media (max-width: 786px) {
+    flex-direction: column;
+  }
 `;
 
 export const StyledForm = styled.div`
@@ -68,6 +76,14 @@ export const StyledForm = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  top:100px;
+
+  @media (max-width: 1200px) {
+    top:80px;
+  }
+  @media (max-width: 786px) {
+    width: 100%;
+  }
 `;
 export const ErrorWrapper = styled.div`
   color: white;

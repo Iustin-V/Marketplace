@@ -191,7 +191,7 @@ export const Home = () => {
         </div>
 
 
-        <div className="flex flex-wrap justify-between p-12 -mx-6">
+        <div className="flex flex-wrap justify-between p-1 -mx-6  md:p-12">
 
           <div className="w-full md:w-1/3 p-6 flex flex-col flex-grow flex-shrink" >
             <div className="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow-lg">
@@ -237,7 +237,7 @@ export const Home = () => {
               <a href="/categorie/3/electronice" className="flex flex-wrap no-underline hover:no-underline">
                 <img src={telefon} className="h-64 w-full rounded-t pb-6 object-cover"/>
                   <p className="w-full text-gray-600 text-xs md:text-sm px-6">DESCOPERA ELECTRONICE</p>
-                  <div className="w-full  font-bold text-xl text-gray-900 px-6">Include telefoane mobile, laptop-uri si televizoare</div>
+                  <div className="w-full  font-bold text-xl text-gray-900 px-6 mb-6">Include telefoane mobile, laptop-uri si televizoare</div>
                   {/*<p className="text-gray-800 font-serif text-base px-6 mb-5">*/}
                   {/*  Lorem ipsum eu nunc commodo posuere et sit amet ligula.*/}
                   {/*</p>*/}

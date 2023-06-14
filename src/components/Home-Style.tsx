@@ -9,9 +9,11 @@ export const StyledPageWrapper = styled.div`
   justify-content: center;
   height: 100%;
   width: 100%;
+  padding-top: 80px;
   @media (max-width: 768px) {
-    height: 700px;
+    padding:  80px 24px 0;
   }
+ 
 `;
 export const PageContainer = styled.div`
   max-width: 1440px;
@@ -28,9 +30,18 @@ export const PageContainer = styled.div`
 export const PageTitle = styled.p`
   font-size: 30px;
   margin-top: 100px;
+
+  @media (max-width: 768px) {
+    margin-top: 24px;
+  }
+  
 `;export const PageSubtitle = styled.p`
   margin-top: 15px;
   font-size: 20px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 8px;
+  }
 `;
 export const PageDescription = styled.p`
   font-size: 20px;

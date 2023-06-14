@@ -83,7 +83,7 @@ export const Login = () => {
         <PageContainer>
           <StyledForm>
             {isLogin?<>
-              <PageTitle>Inregistreaza-te</PageTitle>
+              <PageTitle style={{marginTop:"0px"}}>Inregistreaza-te</PageTitle>
 
               <StyledLoginInput
                   id="email"
@@ -126,7 +126,7 @@ export const Login = () => {
                   </ErrorWrapper>
               )}
             </>:<>
-              <PageTitle>Intra in cont</PageTitle>
+              <PageTitle style={{marginTop:"0px"}} >Intra in cont</PageTitle>
 
               <StyledLoginInput
                   id="email"

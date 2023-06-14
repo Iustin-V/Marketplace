@@ -120,10 +120,10 @@ export const AddPage = () => {
     {/*  </PageContainer>*/}
     {/*</StyledPageWrapper>*/}
   <div
-      className="relative min-h-screen flex items-center justify-center bg-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 bg-gray-500 bg-no-repeat bg-cover relative items-center"
+      className="relative min-h-screen flex items-center justify-center bg-center bg-gray-50 py-12 mt-12 md:mt-8 px-6 sm:px-6 lg:px-8 bg-gray-500 bg-no-repeat bg-cover relative items-center"
       style={{backgroundImage:"url(https://images.unsplash.com/photo-1532423622396-10a3f979251a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1500&q=80)"}}>
     <div className="absolute bg-black opacity-60 inset-0 z-0"></div>
-    <div className="max-w-6xl w-full space-y-8 p-10 bg-white rounded-xl shadow-lg z-10">
+    <div className="max-w-6xl w-full space-y-8 p-4 md:p-10 bg-white rounded-xl shadow-lg z-10">
       <div className="grid  gap-8 grid-cols-1">
         <div className="flex flex-col ">
           <div className="flex flex-col sm:flex-row items-center">

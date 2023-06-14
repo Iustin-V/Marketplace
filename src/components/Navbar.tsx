@@ -11,7 +11,7 @@ import {
 interface NavbarProps {}
 
 export const Navbar = (props: NavbarProps) => {
-  const NavItems = ["Mesaje", "Favorite", "Contul tau"];
+  const NavItems = [ "Favorite", "Contul tau"];
 
   console.log(
     "aaaa",
@@ -37,7 +37,7 @@ export const Navbar = (props: NavbarProps) => {
     <Container>
       <StyledNav>
         <Logo to={"acasa"}>Marketplace</Logo>
-        <StyledInput onKeyDown={handleKeyDown} />
+        <StyledInput  placeholder="Cauta anuntul" onKeyDown={handleKeyDown} />
         <ItemsWrapper>
           <StyledNavItems>
             <>{NavItemsList}</>
