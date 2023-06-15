@@ -121,7 +121,7 @@ export const EditProfile = () => {
         )
           .then((response) => {
             console.log(response.data.message);
-            window.location.href = "/account";
+            window.location.href = "/contul-tau";
           })
           .catch((error) => {
             console.log(error);
@@ -143,7 +143,7 @@ export const EditProfile = () => {
     })
       .then((response) => {
         localStorage.removeItem("token");
-        window.location.href = "/register";
+        window.location.href = "/login";
       })
       .catch((error) => {
         console.log(error);

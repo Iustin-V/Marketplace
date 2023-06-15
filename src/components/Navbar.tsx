@@ -11,7 +11,7 @@ import {
 interface NavbarProps {}
 
 export const Navbar = (props: NavbarProps) => {
-  const NavItems = [ "Favorite", "Contul tau"];
+  const NavItems = [  "Contul tau"];
 
   console.log(
     "aaaa",

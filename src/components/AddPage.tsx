@@ -30,6 +30,14 @@ export const AddPage = () => {
   const [subcategory, setSubcategory] = useState([
     { id: 0, nume: "", id_categorie: 0 },
   ]);
+  const token = localStorage.getItem("token");
+
+  useEffect(()=>{
+    if(!token){
+      window.location.href='/login'
+    }
+  },[token])
+
   useEffect(() => {
     Axios.get("http://localhost:3002/api/categories/get").then((data) => {
       setCategories(data.data);
@@ -59,17 +67,20 @@ export const AddPage = () => {
   ) => {
     console.log(subcategorie)
     console.log(titlu, descriere, imagine);
+    const token = localStorage.getItem("token");
+
     Axios.post("http://localhost:3002/api/anunt", {
 
         titlu: titlu,
         descriere: descriere,
         data: new Date(),
         id_subcategorie: subcategorie,
-        id_user: 0,
         imagine: imagine,
         localitate: localitate,
         judet: judet
-    })
+    },{    headers: {
+        Authorization: `Bearer ${token}`,
+      },})
       .then((response) => {
         window.location.href='/'
 

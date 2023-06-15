@@ -61,7 +61,7 @@ export const StyledNavItem = styled(Link)`
     transition: background-color 1s;
   }
   @media (max-width: 1200px) {
-    border-radius: 15px 0 0 15px;
+    border-radius: 15px 15px;
     margin-left: 5px;
   }
   @media (min-width: 1200px) {

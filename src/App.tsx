@@ -36,8 +36,8 @@ function App() {
           {/*<ScrollToTop />*/}
           <Routes>
             <Route path={`/acasa`} element={<Home />} />
+            <Route path={`/`} element={<Home />} />
             <Route path={`/login`} element={<Login />} />
-            <Route path={`/test`} element={<ProductPage />} />
             <Route path={`/contul-tau`} element={<Account />} />
             <Route path={`/creeaza-profil`} element={<CreateProfile />} />
             <Route path={`/editeaza-profil`} element={<EditProfile />} />

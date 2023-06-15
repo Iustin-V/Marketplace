@@ -167,8 +167,16 @@ app.post("/api/login", (req, res) => {
     );
 });
 
-app.post('/api/anunt', (req, res) => {
-    const { titlu, descriere, data, id_subcategorie, id_user, imagine ,localitate,judet} = req.body;
+app.post('/api/anunt', async (req, res) => {
+    const { titlu, descriere, data, id_subcategorie, imagine ,localitate,judet} = req.body;
+    const token = req.headers.authorization.split(" ")[1];
+    const options = { expiresIn: "1h" };
+    const secretKey = "secretkey";
+
+    const decoded = await jwt.verify(token, secretKey, options);
+
+    const id_user = decoded.id;
+
     const base64Image = imagine.replace(/^data:image\/\w+;base64,/, '');
     const binaryImage = Buffer.from(base64Image, 'base64');
     const query = `
@@ -190,6 +198,31 @@ app.post('/api/anunt', (req, res) => {
 
 
 });
+
+app.get('/api/listing-user/:id', async (req, res) => {
+        const requested_user_id = req.params.id;
+
+        const query = `
+    SELECT p.telefon, u.mail
+    FROM profil p
+    JOIN utilizator u ON p.user_id = u.id
+    WHERE p.user_id = ?
+  `;
+
+        db.query(query, [requested_user_id], (err, result) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({ error: 'Error fetching data from database' });
+            }
+
+            if (result.length === 0) {
+                return res.status(404).json({ error: 'User not found' });
+            }
+
+            const { telefon, mail } = result[0];
+            res.json({ telefon, mail });
+        });
+    });
 
 app.get("/api/profile", async (req, res) => {
     try {
@@ -300,7 +333,7 @@ app.delete("/api/delete-account", (req, res) => {
         }
 
         const user_id = decoded.id;
-        db.query("DELETE FROM postari WHERE user_id=?", user_id, (err, result) => {
+        db.query("DELETE FROM anunt WHERE id_user=?", user_id, (err, result) => {
             if (err) {
                 console.log(err);
                 res
@@ -319,7 +352,7 @@ app.delete("/api/delete-account", (req, res) => {
             }
         });
 
-        db.query("DELETE FROM users WHERE id=?", user_id, (err, result) => {
+        db.query("DELETE FROM utilizator WHERE id=?", user_id, (err, result) => {
             if (err) {
                 console.log(err);
                 res.status(500).json({ error: "Error deleting user from database" });
@@ -330,6 +363,106 @@ app.delete("/api/delete-account", (req, res) => {
     });
 });
 
+app.get("/api/get-listings", async (req, res) => {
+    try {
+        const token = req.headers.authorization.split(" ")[1];
+        const options = { expiresIn: "1h" };
+        const secretKey = "secretkey";
+
+        const decoded = await jwt.verify(token, secretKey, options);
+
+        const user_id = decoded.id;
+        db.query("SELECT * FROM anunt WHERE id_user=?", user_id, (err, result) => {
+            if (err) {
+                console.log(err);
+                res.status(500).json({ error: "Error fetching data from database" });
+                return;
+            }
+            result.forEach((listing) => {
+                listing.imagine = Buffer.from(listing.imagine).toString("base64");
+            });
+
+            res.json(result);
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ error: "Error signing token" });
+    }
+});
+
+
+app.delete("/api/delete-post", (req, res) => {
+    const token = req.headers.authorization.split(" ")[1];
+    const postId = req.headers.body;
+    const options = { expiresIn: "1h" };
+    const secretKey = "secretkey";
+
+    jwt.verify(token, secretKey, options, (err, decoded) => {
+        if (err) {
+            console.log(err);
+            res.status(500).json({ error: "Error decoding token" });
+            return;
+        }
+
+        const user_id = decoded.id;
+        db.query(
+            "DELETE FROM anunt WHERE id=? and id_user=?",
+            [postId, user_id],
+            (err, result) => {
+                if (err) {
+                    console.log(err);
+                    res
+                        .status(500)
+                        .json({ error: "Error deleting user posts from database" });
+                    return;
+                }
+            }
+        );
+
+        res.status(200).json({ message: "User account deleted successfully" });
+    });
+});
+app.put("/api/edit-post", async (req, res) => {
+    try {
+        const { titlu,descriere, imagine, id } = req.body;
+
+        const base64Imagine = imagine.replace(/^data:image\/\w+;base64,/, "");
+        const binaryImagine = Buffer.from(base64Imagine, "base64");
+
+        const token = req.headers.authorization.split(" ")[1];
+        const options = { expiresIn: "1h" };
+        const secretKey = "secretkey";
+
+        const decoded = await jwt.verify(token, secretKey, options);
+
+        const user_id = decoded.id;
+
+        const updateQuery = `
+      UPDATE anunt
+      SET titlu=?,descriere=?, imagine=?
+      WHERE id=? and  id_user = ? 
+    `;
+
+        const values = [titlu,descriere, binaryImagine, id, user_id];
+
+        db.query(updateQuery, values, (err, result) => {
+            if (err) {
+                console.error(err);
+                res
+                    .status(500)
+                    .json({ error: "Error updating profil into the database" });
+                return;
+            }
+
+            res
+                .status(200)
+                .json({ message: "Profil updated successfully", id: user_id });
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Error updating profil into the database" });
+    }
+});
 app.put("/api/edit-profile", async (req, res) => {
     try {
         const {
